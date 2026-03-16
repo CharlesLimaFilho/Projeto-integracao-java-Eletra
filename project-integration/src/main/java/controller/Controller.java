@@ -1,14 +1,22 @@
-import Enums.Categories;
-import Enums.Lines;
-import Enums.Models;
+package controller;
+
+import javafx.fxml.Initializable;
+import org.project.model.enums.Models;
+import org.project.model.enums.Categories;
+import org.project.model.enums.Lines;
+
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.Arrays;
+import java.util.ResourceBundle;
 
 
-public class Controller {
+public class Controller implements Initializable {
     @FXML //fx:id="cbLines"
     private ComboBox<String> cbLines;
 
@@ -18,9 +26,11 @@ public class Controller {
     @FXML //fx:id="tvModels"
     private TreeView<String> tvModels;
 
-    public void initialize() {
-        cbLines.setItems(FXCollections.observableArrayList(Arrays.asList(Lines.CRONOS.name, Lines.ARES.name)));
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        cbLines.setItems(FXCollections.observableArrayList(Lines.CRONOS.name, Lines.ARES.name));
         cbLines.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> changed(newValue)));
+
     }
 
     public void changed(String lineName) {
@@ -55,4 +65,5 @@ public class Controller {
             tvModels.setShowRoot(false);
         }
     }
+
 }
