@@ -1,69 +1,87 @@
 package controller;
 
 import javafx.fxml.Initializable;
-import org.project.model.enums.Models;
-import org.project.model.enums.Categories;
-import org.project.model.enums.Lines;
+
+import mapping.CategoryTable;
+import mapping.LineTable;
+import mapping.ModelTable;
+import org.project.model.DataBaseHelper;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 
 public class Controller implements Initializable {
-    @FXML //fx:id="cbLines"
+    @FXML
     private ComboBox<String> cbLines;
 
-    @FXML //fx:id="tpModels"
+    @FXML
     private TitledPane tpModels;
 
-    @FXML //fx:id="tvModels"
+    @FXML
     private TreeView<String> tvModels;
+
+    private DataBaseHelper dataBaseHelper = new DataBaseHelper();
+
+    private List<LineTable> lines;
+
+    private List<CategoryTable> categories;
+
+    private List<ModelTable> models;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        cbLines.setItems(FXCollections.observableArrayList(Lines.CRONOS.name, Lines.ARES.name));
+
+        dataBaseHelper.startConnection();
+
+        lines = LineTable.getLines();
+
+
+        ArrayList<String> lineNames = new ArrayList<>();
+        for (LineTable line : lines) {
+            lineNames.add(line.getLine_name());
+        }
+
+
+        cbLines.setItems(FXCollections.observableArrayList(lineNames));
         cbLines.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> changed(newValue)));
 
     }
 
     public void changed(String lineName) {
 
-        Lines line = null;
-        for (Lines lineFind : Lines.values() ) {
-            if (lineFind.name.equals(lineName)) {
-                line =  lineFind;
-            }
-        }
-
         TreeItem<String> addTree = new TreeItem<>();
-        if (line != null) {
+        if (lineName != null) {
 
             int cont = 0;
             tpModels.setDisable(false);
 
-            for (Categories categories : line.categories) {
-                addTree.getChildren().add(new TreeItem<>(categories.name));
+            for (LineTable line : lines) {
+                if (lineName.equals(line.getLine_name())) {
+                    categories = CategoryTable.getCategoriesByLineId(line.getId_line());
 
-                int categoryIndex = line.categories.indexOf(categories);
+                    for (CategoryTable category : categories) {
+                        addTree.getChildren().add(new TreeItem<>(category.getCategory_name()));
+                        models = ModelTable.getModelsByCategoryId(category.getId_category());
 
-                for (Models models : line.categories.get(categoryIndex).models) {
-                    addTree.getChildren().get(cont).getChildren().add(new TreeItem<>(models.name));
+                        for (ModelTable model : models) {
+                            addTree.getChildren().get(cont).getChildren().add(new TreeItem<>(model.getModel_name()));
+                        }
+                        cont++;
+                    }
                 }
-                cont++;
             }
 
-            addTree.setValue(line.name);
+            addTree.setValue(lineName);
             addTree.setExpanded(true);
             tvModels.setRoot(addTree);
             tvModels.setShowRoot(false);
         }
     }
-
 }
