@@ -52,12 +52,14 @@ public class Controller implements Initializable {
         cbLines.setItems(FXCollections.observableArrayList(lineNames));
         cbLines.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> changed(newValue)));
 
+        dataBaseHelper.closeConnection();
     }
 
     public void changed(String lineName) {
 
         TreeItem<String> addTree = new TreeItem<>();
         if (lineName != null) {
+            dataBaseHelper.startConnection();
 
             int cont = 0;
             tpModels.setDisable(false);
@@ -82,6 +84,8 @@ public class Controller implements Initializable {
             addTree.setExpanded(true);
             tvModels.setRoot(addTree);
             tvModels.setShowRoot(false);
+
+            dataBaseHelper.closeConnection();
         }
     }
 }
