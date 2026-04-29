@@ -5,14 +5,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.Initializable;
 
-import org.project.DataBaseHelper;
-
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import org.project.models.CategoryTable;
-import org.project.models.LineTable;
-import org.project.models.ModelTable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
@@ -48,15 +43,10 @@ public class Controller implements Initializable {
 
     private List<String> lines;
 
-    private List<String> categories;
-
-    private List<ModelTable> models;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         response = restTemplate.getForEntity(resouceUrl + "line", String.class);
-
 
         try {
             linesMap = mapper.readTree(response.getBody());
@@ -83,23 +73,6 @@ public class Controller implements Initializable {
 
             int cont = 0;
             tpModels.setDisable(false);
-
-
-//            for (LineTable line : lines) {
-//                if (lineName.equals(line.getLine_name())) {
-//                    categories = restTemplate.getForEntity(resouceUrl + );
-//
-//                    for (CategoryTable category : categories) {
-//                        addTree.getChildren().add(new TreeItem<>(category.getCategory_name()));
-//                        models = ModelTable.getModelsByCategoryId(category.getId_category());
-//
-//                        for (ModelTable model : models) {
-//                            addTree.getChildren().get(cont).getChildren().add(new TreeItem<>(model.getModel_name()));
-//                        }
-//                        cont++;
-//                    }
-//                }
-//            }
 
             for (JsonNode linesFind : linesMap) {
                 if (linesFind.get("line_name").asText().equals(lineName)) {
@@ -136,7 +109,6 @@ public class Controller implements Initializable {
 
         try {
             JsonNode root = mapper.readTree(response.getBody());
-            //int a = root.get(1).get("id_line").asInt();
 
             for (JsonNode rootData : root) {
                 data.add(rootData.get(dataName).textValue());
