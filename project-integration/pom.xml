@@ -8,6 +8,13 @@
     <artifactId>project-integration</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.18</version>
+        <relativePath/>
+    </parent>
+
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
@@ -24,7 +31,7 @@
                     <appName>Projeto Integracao</appName>
                     <vendor>Charles Lima</vendor>
                     <verbose>true</verbose>
-                    <mainClass>Main</mainClass>
+                    <mainClass>org.project.Main</mainClass>
                 </configuration>
                 <executions>
                     <execution>
@@ -50,6 +57,11 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
             </plugin>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
     <dependencies>
@@ -57,6 +69,12 @@
             <groupId>org.project</groupId>
             <artifactId>project-back</artifactId>
             <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.6.4</version>
         </dependency>
     </dependencies>
 </project>
