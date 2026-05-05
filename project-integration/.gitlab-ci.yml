@@ -1,8 +1,12 @@
 default:
-  image: bellsoft/liberica-openjdk-debian:8u332-full
+  image: maven:3.8.6-jdk-8
 
 stages:
   - build
+
+before_script:
+  - apt-get update -y
+  - apt-get install -y openjfx
 
 build-front:
   stage: build
