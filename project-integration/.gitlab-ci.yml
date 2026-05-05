@@ -1,5 +1,5 @@
 default:
-  image: maven:3.6.3-jdk-8
+  image: bellsoft/liberica-openjdk-debian:8u332-full
 
 stages:
   - build
@@ -7,7 +7,5 @@ stages:
 build-front:
   stage: build
   script:
-    - apt-get update
-    - apt-get install -y openjfx
     - cd project-integration
     - 'mvn clean package'
