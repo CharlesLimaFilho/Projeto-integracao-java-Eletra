@@ -7,5 +7,7 @@ stages:
 build-front:
   stage: build
   script:
+    - apt-get update
+    - apt-get install -y openjfx
     - cd project-integration
     - 'mvn clean package'
