@@ -7,4 +7,5 @@ stages:
 build-front:
   stage: build
   script:
+    - cd project-integration
     - 'mvn clean package'
