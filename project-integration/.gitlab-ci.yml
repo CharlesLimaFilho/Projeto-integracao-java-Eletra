@@ -1,18 +1,8 @@
 default:
-  image: maven:3.9.15-amazoncorretto-8
+  image: maven:3.9.13-amazoncorretto-8
 
 stages:
-  - pre-build
   - build
-
-download-javafx:
-  stage: pre-build
-  script:
-    - apt-get update -y
-    - apt-get install -y openjfx
-  artifacts:
-    paths:
-      - builds/
 
 build-front:
   stage: build
