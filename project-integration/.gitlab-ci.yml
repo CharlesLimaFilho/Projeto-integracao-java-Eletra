@@ -9,4 +9,5 @@ build-front:
     - cd project-integration
     - 'mvn clean package'
   artifacts:
-    name: project-integration/target/jfx/native/*.exe
+    paths:
+      - project-integration/target/jfx/native/*.exe
