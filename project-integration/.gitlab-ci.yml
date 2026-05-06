@@ -3,6 +3,8 @@ stages:
 
 build-front:
   stage: build
+  tags:
+    - local_runner
   script:
     - cd project-integration
     - 'mvn clean package'
