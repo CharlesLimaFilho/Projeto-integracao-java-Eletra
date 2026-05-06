@@ -12,7 +12,7 @@ download-javafx:
     - apt-get install -y openjfx
   artifacts:
     paths:
-      - build/
+      - builds/
 
 build-front:
   stage: build
