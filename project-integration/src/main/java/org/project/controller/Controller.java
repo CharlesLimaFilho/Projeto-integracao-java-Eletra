@@ -15,19 +15,19 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
     @FXML
-    private ComboBox<String> cbLines;
+    protected ComboBox<String> cbLines;
 
     @FXML
-    private TitledPane tpModels;
+    protected TitledPane tpModels;
 
     @FXML
-    private TreeView<String> tvModels;
+    protected TreeView<String> tvModels;
 
-    private LineService lineService = new LineService();
+    protected LineService lineService = new LineService();
 
-    private CategoryService categoryService = new CategoryService();
+    protected CategoryService categoryService = new CategoryService();
 
-    private ModelService modelService  = new ModelService();
+    protected ModelService modelService  = new ModelService();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

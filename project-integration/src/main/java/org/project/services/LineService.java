@@ -6,17 +6,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Collections;
 import java.util.List;
 
 public class LineService {
 
-    private RestTemplate restTemplate = new RestTemplate();
+    protected RestTemplate restTemplate = new RestTemplate();
 
-    private ResponseEntity<String> response;
+    protected ResponseEntity<String> response;
 
-    private ObjectMapper mapper = new ObjectMapper();
+    protected ObjectMapper mapper = new ObjectMapper();
 
-    private JsonNode linesMap;
+    protected JsonNode linesMap;
+
+    public LineService() {}
 
     public List<String> getLineNames() {
 
@@ -25,7 +28,7 @@ public class LineService {
         try {
             linesMap = mapper.readTree(response.getBody());
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            return Collections.emptyList();
         }
 
         return ServiceUtils.extractData(response, "line_name");

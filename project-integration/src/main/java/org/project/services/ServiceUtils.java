@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ServiceUtils {
@@ -20,12 +21,12 @@ public class ServiceUtils {
             JsonNode root = mapper.readTree(response.getBody());
 
             for (JsonNode rootData : root) {
-                data.add(rootData.get(dataName).textValue());
+                data.add(rootData.get(dataName).asText());
             }
 
             return data;
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            return Collections.emptyList();
         }
     }
 

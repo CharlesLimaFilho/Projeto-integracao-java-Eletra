@@ -7,9 +7,9 @@ import java.util.List;
 
 public class ModelService {
 
-    private RestTemplate restTemplate = new RestTemplate();
+    protected RestTemplate restTemplate = new RestTemplate();
 
-    private ResponseEntity<String> response;
+    protected ResponseEntity<String> response;
 
     public List<String> getLineNames(int categoryId) {
 

@@ -6,26 +6,28 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Collections;
 import java.util.List;
 
 public class CategoryService {
 
-    private RestTemplate restTemplate = new RestTemplate();
+    protected RestTemplate restTemplate = new RestTemplate();
 
-    private ResponseEntity<String> response;
+    protected ResponseEntity<String> response;
 
-    private ObjectMapper mapper = new ObjectMapper();
+    protected ObjectMapper mapper = new ObjectMapper();
 
-    private JsonNode categoriesMap;
+    protected JsonNode categoriesMap;
+
+    public CategoryService() {}
 
     public List<String> getCategoryNames(int lineId) {
-
         response = restTemplate.getForEntity(ServiceUtils.getResourceUrl() + "category/" + lineId, String.class);
 
         try {
             categoriesMap = mapper.readTree(response.getBody());
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            return Collections.emptyList();
         }
 
         return ServiceUtils.extractData(response, "category_name");
